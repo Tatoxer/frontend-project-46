@@ -1,11 +1,5 @@
-#!usr/env/node
+#!/usr/bin/env node
 
-const { Command } = require('commander');
-const program = new Command();
+import commander from "../scripts/commander.js";
 
-program
-  .name('string-util')
-  .description('CLI to some JavaScript string utilities')
-  .version('0.8.0');
-
-program.parse();
+commander();

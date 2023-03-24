@@ -19,5 +19,8 @@
   "homepage": "https://github.com/Tatoxer/frontend-project-46#readme",
   "devDependencies": {
     "eslint": "^8.36.0"
+  },
+  "dependencies": {
+    "commander": "^10.0.0"
   }
 }
