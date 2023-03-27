@@ -1,12 +1,14 @@
-import {program} from "commander";
+import { program } from 'commander';
 
 const commander = () => {
   program
-    .name('genDiff')
+    .name('gendiff')
     .description('Compares two configuration files and shows a difference.')
-    .version('0.0.1');
+    .version('0.0.1')
+    .arguments('<filepath1> <filepath2>')
+    .option('-f, --format <type>', 'output format');
 
-  program.parse()
+  program.parse();
 };
 
 export default commander;
