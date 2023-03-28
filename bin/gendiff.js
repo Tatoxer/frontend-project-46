@@ -11,36 +11,36 @@ const genDiff = (obj1, obj2) => {
   const entries = Object.entries(obj1);
   const obj2Keys = Object.keys(obj2);
 
-  const result = entries.flatMap(([key, value]) => {
-    const str = [];
+  const obj1Difference = entries.flatMap(([key, value]) => {
+    const array = [];
 
     // Если есть ключ но не совпадают значения
     if (Object.hasOwn(obj2, key) && value !== obj2[key]) {
-      str.push(`- ${key}: ${value}\n`);
-      str.push(`+ ${key}: ${obj2[key]}\n`);
+      array.push(`- ${key}: ${value}\n`);
+      array.push(`+ ${key}: ${obj2[key]}\n`);
     }
 
     // Если совпадают ключи и значения
     if (Object.hasOwn(obj2, key) && value === obj2[key]) {
-      str.push(`  ${key}: ${value}\n`);
+      array.push(`  ${key}: ${value}\n`);
     }
 
     // Если нет ключа
     if (!Object.hasOwn(obj2, key)) {
-      str.push(`- ${key}: ${value}\n`);
+      array.push(`- ${key}: ${value}\n`);
     }
-    return str;
+    return array;
   });
 
-  const result2 = obj2Keys.flatMap((key) => {
-    const str = [];
+  const obj2Difference = obj2Keys.flatMap((key) => {
+    const array = [];
 
     if (!Object.hasOwn(obj1, key)) {
-      str.push(`+ ${key}: ${obj2[key]}\n`);
+      array.push(`+ ${key}: ${obj2[key]}\n`);
     }
-    return str;
+    return array;
   });
-  return [...result, ...result2].join('');
+  return [...obj1Difference, ...obj2Difference].join('');
 };
 
 const path1 = getAbsPathFile('src/file1.json');
