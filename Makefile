@@ -9,3 +9,9 @@ runHelp:
 
 runFiles:
 	node bin/index.js ./src/file1.json ./src/file2.json
+
+test:
+	npx jest
+
+testCoverage:
+	npx jest --coverage
