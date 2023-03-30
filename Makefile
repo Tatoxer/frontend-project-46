@@ -11,13 +11,13 @@ runFiles:
 	node bin/index.js ./src/file1.json ./src/file2.json
 
 test:
-	npx jest
+	NODE_OPTIONS=--experimental-vm-modules npx jest
 
 testCoverage:
-	npx jest --coverage
+	NODE_OPTIONS=--experimental-vm-modules npx jest --coverage
 
 testWatch:
-	npx jest --watch
+	NODE_OPTIONS=--experimental-vm-modules npx jest --watch
 
 lint:
 	npx eslint

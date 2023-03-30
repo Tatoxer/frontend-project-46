@@ -12,7 +12,6 @@ const genDiff = (filePath1, filePath2) => {
 
   const obj1Difference = compareObjectsByEntries(file1, file2);
   const obj2Difference = compareObjectsByKeys(file1, file2);
-
   return ['{\n', ...obj1Difference, ...obj2Difference, '}'].join('');
 };
 
