@@ -20,4 +20,4 @@ testWatch:
 	npx jest --watch
 
 lint:
-	eslint
+	npx eslint
