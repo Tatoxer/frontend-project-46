@@ -15,3 +15,9 @@ test:
 
 testCoverage:
 	npx jest --coverage
+
+testWatch:
+	npx jest --watch
+
+lint:
+	eslint
