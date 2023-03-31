@@ -37,16 +37,4 @@ const compareObjects = (obj1, obj2) => {
   return [...checkedObj1, ...checkedObj2];
 };
 
-const testFile1 = {
-  host: 'hexlet.io',
-  timeout: 50,
-  proxy: '123.234.53.22',
-  follow: false,
-};
-const testFile2 = {
-  timeout: 20,
-  verbose: true,
-  host: 'hexlet.io',
-};
-console.log(compareObjects(testFile1, testFile2));
 export default compareObjects;

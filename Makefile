@@ -4,19 +4,19 @@ install:
 run:
 	node bin/index.js
 
-runHelp:
+run-help:
 	node bin/index.js -h
 
-runFiles:
-	node bin/index.js ./src/file1.json ./src/file2.json
+run-files:
+	node bin/index.js ./__fixtures__/file1.json ./__fixtures__/file2.json
 
 test:
 	NODE_OPTIONS=--experimental-vm-modules npx jest
 
-testCoverage:
+test-coverage:
 	NODE_OPTIONS=--experimental-vm-modules npx jest --coverage
 
-testWatch:
+test-watch:
 	NODE_OPTIONS=--experimental-vm-modules npx jest --watch
 
 lint:
