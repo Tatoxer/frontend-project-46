@@ -10,6 +10,7 @@ const filePath5 = getFixturePath('expectedFlat2.txt');
 const filePath6 = getFixturePath('file1.yml');
 const filePath7 = getFixturePath('file2.yaml');
 const filePath8 = getFixturePath('empty.yaml');
+const filePath9 = getFixturePath('file1.html');
 
 const expectedResult1 = fs.readFileSync(filePath4, 'utf-8');
 const expectedResult2 = fs.readFileSync(filePath5, 'utf-8');
@@ -19,4 +20,5 @@ test('genDiff func', () => {
   expect(genDiff(filePath2, filePath3)).toEqual(expectedResult2);
   expect(genDiff(filePath6, filePath7)).toEqual(expectedResult1);
   expect(genDiff(filePath7, filePath8)).toEqual(expectedResult2);
+  expect(genDiff(filePath9, filePath9)).toEqual(null);
 });
