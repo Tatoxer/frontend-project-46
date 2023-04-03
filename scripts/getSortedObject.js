@@ -1,11 +1,11 @@
 import _ from 'lodash';
 
-const getSortedJSON = (json) => {
-  const sorted = _.toPairs(json).sort();
+const getSortedObject = (object) => {
+  const sorted = _.toPairs(object).sort();
   return sorted.reduce((acc, [key, value]) => {
     acc[key] = value;
     return acc;
   }, {});
 };
 
-export default getSortedJSON;
+export default getSortedObject;
