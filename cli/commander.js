@@ -1,5 +1,5 @@
 import { program } from 'commander';
-import gendiff from '../cli/gendiff.js';
+import gendiff from './gendiff.js';
 
 const commander = () => {
   program

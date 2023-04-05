@@ -1,4 +1,4 @@
 #!/usr/bin/env node
-import commander from '../scripts/commander.js';
+import commander from '../cli/commander.js';
 
 commander();

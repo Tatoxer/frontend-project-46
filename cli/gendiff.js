@@ -4,6 +4,7 @@ import compareObjects from '../scripts/compareObjects.js';
 import getFileExtension from '../scripts/getFileExtension.js';
 import getYamlFile from '../parsers/yamlParser.js';
 import getJsonFile from '../parsers/jsonParser.js';
+import getFixturePath from '../scripts/getFixturePath.js';
 
 const genDiff = (filePath1, filePath2) => {
   const path1 = getAbsPathFile(filePath1);
@@ -12,7 +13,7 @@ const genDiff = (filePath1, filePath2) => {
   const fileExtension = getFileExtension(path1);
   let file1;
   let file2;
-
+  // FIXME: сортировку проводить на результирующем объекте
   switch (fileExtension) {
     case '.json':
       file1 = getSortedObject(getJsonFile(path1));
@@ -35,3 +36,8 @@ const genDiff = (filePath1, filePath2) => {
 };
 
 export default genDiff;
+
+const file1 = getFixturePath('fileDeep1.json');
+const file2 = getFixturePath('fileDeep2.json');
+
+console.log(genDiff(file1, file2));
