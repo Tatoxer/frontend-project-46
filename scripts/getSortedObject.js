@@ -11,6 +11,3 @@ const getSortedObject = (object) => {
 };
 
 export default getSortedObject;
-
-const file1 = getJsonFile(getFixturePath('fileDeep2.json'));
-console.log(getSortedObject(file1));
