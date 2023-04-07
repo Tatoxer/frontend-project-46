@@ -22,7 +22,7 @@ const compareObjects = (object1, object2) => {
         // Если нет ключа
         if (!Object.hasOwn(obj2, key)) {
           if (isObject(value)) {
-            acc[key] = [(compareWithDepth(value, value, depth + 2)), depth, 'unchanged', ''];
+            acc[key] = [(compareWithDepth(value, value, depth + 2)), depth, 'removed', ''];
           } else {
             acc[key] = [value, depth, 'removed', ''];
           }
