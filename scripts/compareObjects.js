@@ -21,21 +21,25 @@ const compareObjects = (object1, object2) => {
         }
         // Если нет ключа
         if (!Object.hasOwn(obj2, key)) {
-          acc[key] = [value, depth, 'removed', ''];
+          if (isObject(value)) {
+            acc[key] = [(compareWithDepth(value, value, depth + 2)), depth, 'unchanged', ''];
+          } else {
+            acc[key] = [value, depth, 'removed', ''];
+          }
         }
       }
       return acc;
     }, {});
 
     const checkedObj2 = obj2Keys.reduce((acc, key) => {
-      // if (!Object.hasOwn(obj1, key) && isObject(obj2[key])) {
-      //   acc[key] = compareWithDepth(obj2[key], obj2[key], depth + 2);
-      // } else if (!Object.hasOwn(obj1, key)) {
-      //   acc[key] = [obj2[key], depth, 'added', ''];
-      // }
-      if (!Object.hasOwn(obj1, key)) {
+      if (!Object.hasOwn(obj1, key) && isObject(obj2[key])) {
+        acc[key] = [compareWithDepth(obj2[key], obj2[key], depth + 2), depth, 'added', ''];
+      } else if (!Object.hasOwn(obj1, key)) {
         acc[key] = [obj2[key], depth, 'added', ''];
       }
+      // if (!Object.hasOwn(obj1, key)) {
+      //   acc[key] = [obj2[key], depth, 'added', ''];
+      // }
 
       return acc;
     }, {});
@@ -45,8 +49,8 @@ const compareObjects = (object1, object2) => {
 };
 export default compareObjects;
 
-// const file1 = getJsonFile(getFixturePath('fileDeep3.json'));
-// const file2 = getJsonFile(getFixturePath('fileDeep4.json'));
+// const file1 = getJsonFile(getFixturePath('fileDeep1.json'));
+// const file2 = getJsonFile(getFixturePath('fileDeep2.json'));
 //
 // console.log(compareObjects(file1, file2));
 // console.log(JSON.stringify(compareObjects(file1, file2)));
