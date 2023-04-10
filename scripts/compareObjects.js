@@ -15,10 +15,12 @@ const compareObjects = (object1, object2) => {
         if (Object.hasOwn(obj2, key) && value === obj2[key]) {
           acc[key] = [value, depth, 'unchanged', ''];
         }
+
         // Если есть ключ но не совпадают значения
         if (Object.hasOwn(obj2, key) && value !== obj2[key]) {
           acc[key] = [value, depth, 'changed', obj2[key]];
         }
+
         // Если нет ключа
         if (!Object.hasOwn(obj2, key)) {
           if (isObject(value)) {
@@ -33,13 +35,10 @@ const compareObjects = (object1, object2) => {
 
     const checkedObj2 = obj2Keys.reduce((acc, key) => {
       if (!Object.hasOwn(obj1, key) && isObject(obj2[key])) {
-        acc[key] = [compareWithDepth(obj2[key], obj2[key], depth + 2), depth, 'added', ''];
+        acc[key] = [compareWithDepth(obj2[key], obj2[key], depth + 4), depth, 'added', ''];
       } else if (!Object.hasOwn(obj1, key)) {
         acc[key] = [obj2[key], depth, 'added', ''];
       }
-      // if (!Object.hasOwn(obj1, key)) {
-      //   acc[key] = [obj2[key], depth, 'added', ''];
-      // }
 
       return acc;
     }, {});
