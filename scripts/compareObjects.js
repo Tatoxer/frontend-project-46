@@ -43,8 +43,3 @@ const buildComparisonTree = (obj1, obj2) => {
 };
 
 export default buildComparisonTree;
-
-// const file1 = getJsonFile(getFixturePath('fileDeep1.json'));
-// const file2 = getJsonFile(getFixturePath('fileDeep2.json'));
-
-// console.log(buildComparisonTree(file1, file2));
