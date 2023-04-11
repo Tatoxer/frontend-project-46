@@ -3,8 +3,8 @@ import getFileExtension from '../scripts/getFileExtension.js';
 import getYamlFile from '../parsers/yamlParser.js';
 import getJsonFile from '../parsers/jsonParser.js';
 import getFixturePath from '../scripts/getFixturePath.js';
-import compareObjects from '../scripts/compareObjects.js';
 import stylish from './formatters/stylish.js';
+import plainFormatter from './formatters/plain.js';
 import buildComparisonTreeArray from '../scripts/compareObjects.js';
 
 const genDiff = (filePath1, filePath2, formatter) => {
@@ -25,12 +25,14 @@ const genDiff = (filePath1, filePath2, formatter) => {
       file2 = getYamlFile(path2);
       break;
     default:
-      throw new Error('If you see this message, perhaps there is a problem in the program code. Check it');
+      return null;
   }
 
   const difference = buildComparisonTreeArray(file1, file2);
 
   switch (formatter) {
+    case 'plain':
+      return plainFormatter(difference);
     default:
       return stylish(difference);
   }

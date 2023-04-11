@@ -31,5 +31,5 @@ test('genDiff func', () => {
   expect(genDiff(filePath9, filePath9)).toEqual(null);
   expect(genDiff(filePath10, filePath11)).toEqual(expectedResult3);
   expect(genDiff(filePath13, filePath14)).toEqual(expectedResult3);
-  // expect(genDiff(filePath10, filePath11)).toEqual(expectedResult4);
+  expect(genDiff(filePath10, filePath11, 'plain')).toEqual(expectedResult4);
 });

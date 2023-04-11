@@ -13,6 +13,9 @@ run-json-files:
 run-yaml-files:
 	node bin/index.js ./__fixtures__/fileDeep1.yml ./__fixtures__/fileDeep2.yaml
 
+run-plain:
+	node bin/index.js ./__fixtures__/fileDeep1.json ./__fixtures__/fileDeep2.json --format plain
+
 test:
 	NODE_OPTIONS=--experimental-vm-modules npx jest
 
