@@ -4,7 +4,8 @@ import getYamlFile from '../parsers/yamlParser.js';
 import getJsonFile from '../parsers/jsonParser.js';
 import getFixturePath from '../scripts/getFixturePath.js';
 import compareObjects from '../scripts/compareObjects.js';
-import stylish from '../scripts/formatters.js';
+import stylish from './formatters/stylish.js';
+import buildComparisonTreeArray from '../scripts/compareObjects.js';
 
 const genDiff = (filePath1, filePath2, formatter) => {
   const path1 = getAbsPathFile(filePath1);
@@ -27,13 +28,12 @@ const genDiff = (filePath1, filePath2, formatter) => {
       return null;
   }
 
-  const difference = compareObjects(file1, file2);
+  const difference = buildComparisonTreeArray(file1, file2);
 
   switch (formatter) {
     default:
-      return stylish(difference)
+      return stylish(difference);
   }
 };
 
 export default genDiff;
-

@@ -2,15 +2,15 @@ import _ from 'lodash';
 import getFixturePath from './getFixturePath.js';
 import getJsonFile from '../parsers/jsonParser.js';
 
-const initTree = (name, status, children = [], oldValue = '', freshValue = '') => ({
+const initTree = (name, status, children = [], oldValue = '', newValue = '') => ({
   name,
   status,
   children,
   oldValue,
-  freshValue,
+  newValue,
 });
 
-const buildComparisonTree = (obj1, obj2) => {
+const buildComparisonTreeArray = (obj1, obj2) => {
   const sortedKeys = _.sortBy(_.union(Object.keys(obj1), Object.keys(obj2)));
   const packedTree = sortedKeys.map((key) => {
     const value1 = obj1[key];
@@ -18,7 +18,7 @@ const buildComparisonTree = (obj1, obj2) => {
 
     if (Object.hasOwn(obj1, key) && Object.hasOwn(obj2, key)) {
       if (_.isObject(value1) && _.isObject(value2)) {
-        return initTree(key, 'unchanged', buildComparisonTree(value1, value2), '', ''); // Reset oldValue, freshValue for convenient debugging (only here)
+        return initTree(key, 'unchanged', buildComparisonTreeArray(value1, value2), '', ''); // Reset oldValue, freshValue for convenient debugging (only here)
       }
 
       if (value1 === value2) {
@@ -42,4 +42,8 @@ const buildComparisonTree = (obj1, obj2) => {
   return packedTree;
 };
 
-export default buildComparisonTree;
+export default buildComparisonTreeArray;
+// const file1 = getJsonFile(getFixturePath('fileDeep1.json'));
+// const file2 = getJsonFile(getFixturePath('fileDeep2.json'));
+//
+// console.log(buildComparisonTreeArray(file1, file2));
