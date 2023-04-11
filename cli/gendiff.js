@@ -25,7 +25,7 @@ const genDiff = (filePath1, filePath2, formatter) => {
       file2 = getYamlFile(path2);
       break;
     default:
-      return null;
+      throw new Error('If you see this message, perhaps there is a problem in the program code. Check it');
   }
 
   const difference = buildComparisonTreeArray(file1, file2);

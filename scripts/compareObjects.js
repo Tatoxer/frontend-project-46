@@ -18,7 +18,7 @@ const buildComparisonTreeArray = (obj1, obj2) => {
 
     if (Object.hasOwn(obj1, key) && Object.hasOwn(obj2, key)) {
       if (_.isObject(value1) && _.isObject(value2)) {
-        return initTree(key, 'unchanged', buildComparisonTreeArray(value1, value2), '', ''); // Reset oldValue, freshValue for convenient debugging (only here)
+        return initTree(key, 'unchanged', buildComparisonTreeArray(value1, value2), '', ''); // Reset oldValue, newValue for convenient debugging (only here)
       }
 
       if (value1 === value2) {
