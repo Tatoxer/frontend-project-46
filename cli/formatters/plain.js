@@ -5,9 +5,7 @@ const getObjValue = (objParameter) => {
   return typeof value === 'string' && value !== '[complex value]' ? `'${value}'` : value;
 };
 
-const plainFormatter = (arrayObj) => {
-  let filePath = [];
-
+const plainFormatter = (arrayObj, filePath = []) => {
   const iter = (array, depth = 0) => {
     const result = array.reduce((acc, obj) => {
       filePath.push(obj.name);
