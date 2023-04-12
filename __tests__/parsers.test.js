@@ -1,6 +1,5 @@
-import getJsonFile from '../parsers/jsonParser.js';
-import getYamlFile from '../parsers/yamlParser.js';
 import getFixturePath from '../scripts/getFixturePath.js';
+import parser from '../cli/parser.js';
 
 const filePath1 = getFixturePath('file1.json');
 const filePath2 = getFixturePath('file2.json');
@@ -21,14 +20,11 @@ const expectedResult2 = {
   host: 'hexlet.io',
 };
 
-test('JSON parser', () => {
-  expect(getJsonFile(filePath1)).toEqual(expectedResult1);
-  expect(getJsonFile(filePath2)).toEqual(expectedResult2);
-  expect(getJsonFile(filePath3)).toEqual({});
-});
-
-test('yaml parer', () => {
-  expect(getYamlFile(filePath4)).toEqual(expectedResult1);
-  expect(getYamlFile(filePath5)).toEqual(expectedResult2);
-  expect(getYamlFile(filePath6)).toEqual({});
+test('parser', () => {
+  expect(parser(filePath1, '.json')).toEqual(expectedResult1);
+  expect(parser(filePath2, '.json')).toEqual(expectedResult2);
+  expect(parser(filePath3, '.json')).toEqual({});
+  expect(parser(filePath4, '.yml')).toEqual(expectedResult1);
+  expect(parser(filePath5, '.yaml')).toEqual(expectedResult2);
+  expect(parser(filePath6, ',yaml')).toEqual({});
 });
