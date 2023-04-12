@@ -2,22 +2,22 @@ install:
 	npm ci
 
 run:
-	node bin/index.js
+	node bin/gendiff.js.js
 
 run-help:
-	node bin/index.js -h
+	node bin/gendiff.js -h
 
 run-json-files:
-	node bin/index.js ./__fixtures__/fileDeep1.json ./__fixtures__/fileDeep2.json
+	node bin/gendiff.js ./__fixtures__/fileDeep1.json ./__fixtures__/fileDeep2.json
 
 run-yaml-files:
-	node bin/index.js ./__fixtures__/fileDeep1.yaml ./__fixtures__/fileDeep2.yml
+	node bin/gendiff.js ./__fixtures__/fileDeep1.yaml ./__fixtures__/fileDeep2.yml
 
 run-plain:
-	node bin/index.js ./__fixtures__/fileDeep1.json ./__fixtures__/fileDeep2.json --format plain
+	node bin/gendiff.js ./__fixtures__/fileDeep1.json ./__fixtures__/fileDeep2.json --format plain
 
 run-json:
-	node bin/index.js ./__fixtures__/fileDeep1.json ./__fixtures__/fileDeep2.json --format json
+	node bin/gendiff.js.js ./__fixtures__/fileDeep1.json ./__fixtures__/fileDeep2.json --format json
 
 test:
 	NODE_OPTIONS=--experimental-vm-modules npx jest

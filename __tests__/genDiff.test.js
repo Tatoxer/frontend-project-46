@@ -1,6 +1,6 @@
 import fs from 'fs';
 import getFixturePath from '../scripts/getFixturePath.js';
-import genDiff from '../cli/gendiff.js';
+import genDiff from '../cli/index.js';
 import getJsonFile from '../parsers/jsonParser.js';
 
 const filePath1 = getFixturePath('file1.json');
