@@ -11,13 +11,10 @@ run-json-files:
 	node bin/index.js ./__fixtures__/fileDeep1.json ./__fixtures__/fileDeep2.json
 
 run-yaml-files:
-	node bin/index.js ./__fixtures__/fileDeep1.yml ./__fixtures__/fileDeep2.yaml
+	node bin/index.js ./__fixtures__/fileDeep1.yaml ./__fixtures__/fileDeep2.yml
 
 run-plain:
 	node bin/index.js ./__fixtures__/fileDeep1.json ./__fixtures__/fileDeep2.json --format plain
-
-run-json:
-	node bin/index.js ./__fixtures__/fileDeep1.json ./__fixtures__/fileDeep2.json --format json
 
 test:
 	NODE_OPTIONS=--experimental-vm-modules npx jest

@@ -2,10 +2,10 @@ import getAbsPathFile from '../scripts/getAbsoluteFilePath.js';
 import getFileExtension from '../scripts/getFileExtension.js';
 import getYamlFile from '../parsers/yamlParser.js';
 import getJsonFile from '../parsers/jsonParser.js';
+import getFixturePath from '../scripts/getFixturePath.js';
 import stylish from './formatters/stylish.js';
 import plainFormatter from './formatters/plain.js';
 import buildComparisonTreeArray from '../scripts/compareObjects.js';
-import jsonFormatter from './formatters/json.js';
 
 const genDiff = (filePath1, filePath2, formatter) => {
   const path1 = getAbsPathFile(filePath1);
@@ -33,8 +33,6 @@ const genDiff = (filePath1, filePath2, formatter) => {
   switch (formatter) {
     case 'plain':
       return plainFormatter(difference);
-    case 'json':
-      return jsonFormatter(difference);
     default:
       return stylish(difference);
   }

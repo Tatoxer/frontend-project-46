@@ -1,4 +1,6 @@
 import _ from 'lodash';
+import getFixturePath from './getFixturePath.js';
+import getJsonFile from '../parsers/jsonParser.js';
 
 const initTree = (name, status, children = [], oldValue = '', newValue = '') => ({
   name,
@@ -41,3 +43,7 @@ const buildComparisonTreeArray = (obj1, obj2) => {
 };
 
 export default buildComparisonTreeArray;
+// const file1 = getJsonFile(getFixturePath('fileDeep1.json'));
+// const file2 = getJsonFile(getFixturePath('fileDeep2.json'));
+//
+// console.log(buildComparisonTreeArray(file1, file2));
