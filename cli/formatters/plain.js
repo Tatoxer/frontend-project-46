@@ -35,7 +35,7 @@ const plainFormatter = (arrayObj) => {
     }, '');
     return result;
   };
-  return iter(arrayObj, 0);
+  return iter(arrayObj, 0).trimEnd();
 };
 
 export default plainFormatter;
