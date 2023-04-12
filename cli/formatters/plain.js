@@ -1,12 +1,8 @@
 import _ from 'lodash';
-import buildComparisonTreeArray from '../../scripts/compareObjects.js';
-import getFixturePath from '../../scripts/getFixturePath.js';
-import getJsonFile from '../../parsers/jsonParser.js';
 
 const getObjValue = (objParameter) => {
-  const checkValues = ['[complex value]', null, true, false];
   const value = _.isObject(objParameter) ? '[complex value]' : objParameter;
-  return checkValues.includes(value) ? value : `'${value}'`;
+  return typeof value === 'string' && value !== '[complex value]' ? `'${value}'` : value;
 };
 
 const plainFormatter = (arrayObj) => {
@@ -21,7 +17,6 @@ const plainFormatter = (arrayObj) => {
       if (obj.children.length > 0) {
         acc += iter(obj.children, depth + 1);
       }
-      // // FIXME: добавить проверку на null, true, false
 
       if (obj.status === 'removed') {
         acc += `Property '${filePath.join('.')}' was ${obj.status}\n`;
@@ -44,8 +39,3 @@ const plainFormatter = (arrayObj) => {
 };
 
 export default plainFormatter;
-// const file1 = getJsonFile(getFixturePath('fileDeep1.json'));
-// const file2 = getJsonFile(getFixturePath('fileDeep2.json'));
-// const diff = buildComparisonTreeArray(file1, file2);
-//
-// console.log(plainFormatter(diff));
