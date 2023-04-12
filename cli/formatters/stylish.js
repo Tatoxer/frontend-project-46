@@ -1,7 +1,4 @@
 import _ from 'lodash';
-import getFixturePath from '../../scripts/getFixturePath.js';
-import getJsonFile from '../../parsers/jsonParser.js';
-import compareObjects from '../../scripts/compareObjects.js';
 
 const stringify = (value, currentDepth, replacer = ' ', spacesCount = 2) => {
   const iter = (currentValue, depth) => {
@@ -27,7 +24,7 @@ const stringify = (value, currentDepth, replacer = ' ', spacesCount = 2) => {
   return iter(value, currentDepth + spacesCount);
 };
 
-export const stylish = (coll, replacer = ' ', spacesCount = 2) => {
+const stylish = (coll, replacer = ' ', spacesCount = 2) => {
   const iter = (currentNode, depth) => {
     const indentSize = depth * spacesCount;
     const commonIndent = replacer.repeat(indentSize);
@@ -73,11 +70,3 @@ export const stylish = (coll, replacer = ' ', spacesCount = 2) => {
 };
 
 export default stylish;
-
-const file1 = getJsonFile(getFixturePath('file1.json'));
-const file2 = getJsonFile(getFixturePath('file2.json'));
-const diff = compareObjects(file1, file2);
-
-// const formatted = stylish(diff);
-// console.log(formatted);
-// console.log(diff);
