@@ -1,5 +1,5 @@
 import getFixturePath from '../scripts/getFixturePath.js';
-import parser from '../cli/parser.js';
+import parser from '../src/parser.js';
 
 const filePath1 = getFixturePath('file1.json');
 const filePath2 = getFixturePath('file2.json');
