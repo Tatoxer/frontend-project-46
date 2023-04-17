@@ -17,7 +17,7 @@ run-plain:
 	node bin/gendiff.js ./__fixtures__/fileDeep1.json ./__fixtures__/fileDeep2.json --format plain
 
 run-json:
-	node bin/gendiff.js.js ./__fixtures__/fileDeep1.json ./__fixtures__/fileDeep2.json --format json
+	node bin/gendiff.js ./__fixtures__/fileDeep1.json ./__fixtures__/fileDeep2.json --format json
 
 test:
 	NODE_OPTIONS=--experimental-vm-modules npx jest

@@ -24,13 +24,18 @@ const expectedResult3 = fs.readFileSync(filePath12, 'utf-8');
 const expectedResult4 = fs.readFileSync(filePath15, 'utf-8');
 const expectedResult5 = parser(getFixturePath('expectedJSON.json'), 'expectedJSON.json');
 
-test('genDiff func', () => {
-  expect(genDiff(filePath1, filePath2)).toEqual(expectedResult1);
-  expect(genDiff(filePath2, filePath3)).toEqual(expectedResult2);
-  expect(genDiff(filePath6, filePath7)).toEqual(expectedResult1);
-  expect(genDiff(filePath7, filePath8)).toEqual(expectedResult2);
-  expect(genDiff(filePath10, filePath11)).toEqual(expectedResult3);
-  expect(genDiff(filePath13, filePath14)).toEqual(expectedResult3);
+test.each([
+  { a: filePath1, b: filePath2, expected: expectedResult1 },
+  { a: filePath2, b: filePath3, expected: expectedResult2 },
+  { a: filePath6, b: filePath7, expected: expectedResult1 },
+  { a: filePath7, b: filePath8, expected: expectedResult2 },
+  { a: filePath10, b: filePath11, expected: expectedResult3 },
+  { a: filePath13, b: filePath14, expected: expectedResult3 },
+])('genDiff function default parameters', ({ a, b, expected }) => {
+  expect(genDiff(a, b)).toBe(expected);
+});
+
+test('genDiff function', () => {
   expect(genDiff(filePath10, filePath11, 'plain')).toEqual(expectedResult4);
   expect(genDiff(filePath13, filePath14, 'json')).toEqual(expectedResult5);
 });

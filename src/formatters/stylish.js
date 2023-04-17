@@ -32,11 +32,11 @@ const stylish = (coll, replacer = ' ', spacesCount = 2) => {
 
     const lines = currentNode.map((node) => {
       const {
-        name, status, children, oldValue, newValue,
+        name, status, children, valueBefore, valueAfter,
       } = node;
 
-      const oldValueAsString = stringify(oldValue, depth);
-      const newValueAsString = stringify(newValue, depth);
+      const oldValueAsString = stringify(valueBefore, depth);
+      const newValueAsString = stringify(valueAfter, depth);
 
       if (children.length > 0) {
         return `${commonIndent}  ${name}: ${iter(children, depth + 2)}`;

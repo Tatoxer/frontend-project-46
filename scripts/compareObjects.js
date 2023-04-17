@@ -1,11 +1,11 @@
 import _ from 'lodash';
 
-const initTree = (name, status, children = [], oldValue = '', newValue = '') => ({
+const initTree = (name, status, children = [], valueBefore = '', valueAfter = '') => ({
   name,
   status,
   children,
-  oldValue,
-  newValue,
+  valueBefore,
+  valueAfter,
 });
 
 const buildComparisonTreeArray = (obj1, obj2) => {

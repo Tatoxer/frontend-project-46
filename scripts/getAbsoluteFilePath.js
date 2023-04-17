@@ -1,7 +1,7 @@
 import path from 'path';
 import fs from 'fs';
 
-const getAbsPathFile = (relativePath) => {
+const getAbsolutePathFile = (relativePath) => {
   const currentDir = process.cwd().split('/');
   const projectDir = currentDir.join('/');
   if (fs.existsSync(path.resolve(projectDir, relativePath))) {
@@ -12,4 +12,4 @@ const getAbsPathFile = (relativePath) => {
   return null;
 };
 
-export default getAbsPathFile;
+export default getAbsolutePathFile;

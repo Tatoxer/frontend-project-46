@@ -7,17 +7,17 @@ const prepareObjValue = (value) => {
   return value;
 };
 
-const buildEnding = (status, oldValue, newValue) => {
-  const preparedOldValue = prepareObjValue(oldValue);
-  const preparedNewValue = prepareObjValue(newValue);
+const buildEnding = (status, valueBefore, valueAfter) => {
+  const preparedBeforeValue = prepareObjValue(valueBefore);
+  const preparedAfterValue = prepareObjValue(valueAfter);
 
   switch (status) {
     case 'removed':
       return `was ${status}`;
     case 'added':
-      return `was ${status} with value: ${preparedNewValue}`;
+      return `was ${status} with value: ${preparedAfterValue}`;
     case 'updated':
-      return `was ${status}. From ${preparedOldValue} to ${preparedNewValue}`;
+      return `was ${status}. From ${preparedBeforeValue} to ${preparedAfterValue}`;
     default:
       return `was ${status}`;
   }
@@ -32,7 +32,7 @@ const plainFormatter = (arrayObj) => {
       })
       .flatMap((node) => {
         const {
-          name, status, children, oldValue, newValue,
+          name, status, children, valueBefore, valueAfter,
         } = node;
 
         const chain = (nameChain === '') ? name : nameChain.concat('.', name);
@@ -41,7 +41,7 @@ const plainFormatter = (arrayObj) => {
           return iter(children, chain);
         }
 
-        const phraseEnding = buildEnding(status, oldValue, newValue);
+        const phraseEnding = buildEnding(status, valueBefore, valueAfter);
         return `Property '${chain}' ${phraseEnding}`;
       }).join('\n');
     return lines;

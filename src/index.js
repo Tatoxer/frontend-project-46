@@ -1,29 +1,21 @@
 import parseFile from './parser.js';
-import getAbsPathFile from '../scripts/getAbsoluteFilePath.js';
+import getAbsolutePathFile from '../scripts/getAbsoluteFilePath.js';
 import getFileExtension from '../scripts/getFileExtension.js';
-import stylish from './formatters/stylish.js';
-import plainFormatter from './formatters/plain.js';
 import buildComparisonTreeArray from '../scripts/compareObjects.js';
-import jsonFormatter from './formatters/json.js';
+import chooseFormatter from '../scripts/chooseFormatter.js';
 
 const genDiff = (filePath1, filePath2, formatter) => {
-  const path1 = getAbsPathFile(filePath1);
-  const path2 = getAbsPathFile(filePath2);
+  const path1 = getAbsolutePathFile(filePath1);
+  const path2 = getAbsolutePathFile(filePath2);
 
-  const fileExtension = getFileExtension(path1);
-  const file1 = parseFile(path1, fileExtension);
-  const file2 = parseFile(path2, fileExtension);
+  const fileExtension1 = getFileExtension(path1);
+  const fileExtension2 = getFileExtension(path2);
+  const fileContent1 = parseFile(path1, fileExtension1);
+  const fileContent2 = parseFile(path2, fileExtension2);
 
-  const difference = buildComparisonTreeArray(file1, file2);
+  const difference = buildComparisonTreeArray(fileContent1, fileContent2);
 
-  switch (formatter) {
-    case 'plain':
-      return plainFormatter(difference);
-    case 'json':
-      return jsonFormatter(difference);
-    default:
-      return stylish(difference);
-  }
+  return chooseFormatter(formatter, difference);
 };
 
 export default genDiff;
