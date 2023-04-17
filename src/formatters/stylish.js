@@ -31,32 +31,25 @@ const stylish = (coll, replacer = ' ', spacesCount = 2) => {
     const bracketIndent = replacer.repeat(indentSize - spacesCount);
 
     const lines = currentNode.map((node) => {
-      const {
-        name, changes, children, valueBefore, valueAfter,
-      } = node;
+      const beforeValueAsString = stringify(node.valueBefore, depth);
+      const afterValueAsString = stringify(node.valueAfter, depth);
 
-      const beforeValueAsString = stringify(valueBefore, depth);
-      const afterValueAsString = stringify(valueAfter, depth);
-
-      if (children.length > 0) {
-        return `${commonIndent}  ${name}: ${iter(children, depth + 2)}`;
+      if (node.children) {
+        return `${commonIndent}  ${node.name}: ${iter(node.children, depth + 2)}`;
       }
 
-      if (changes === 'updated') {
-        return `${commonIndent}- ${name}: ${beforeValueAsString}`
-          + '\n'
-          + `${commonIndent}+ ${name}: ${afterValueAsString}`;
+      switch (node.changes) {
+        case 'updated':
+          return `${commonIndent}- ${node.name}: ${beforeValueAsString}`
+            + '\n'
+            + `${commonIndent}+ ${node.name}: ${afterValueAsString}`;
+        case 'added':
+          return `${commonIndent}+ ${node.name}: ${afterValueAsString}`;
+        case 'removed':
+          return `${commonIndent}- ${node.name}: ${beforeValueAsString}`;
+        default:
+          return `${commonIndent}  ${node.name}: ${beforeValueAsString}`;
       }
-
-      if (changes === 'added') {
-        return `${commonIndent}+ ${name}: ${afterValueAsString}`;
-      }
-      if (changes === 'removed') {
-        return `${commonIndent}- ${name}: ${beforeValueAsString}`;
-      }
-
-      // If nothing changed
-      return `${commonIndent}  ${name}: ${beforeValueAsString}`;
     });
 
     return [

@@ -1,13 +1,5 @@
 import _ from 'lodash';
 
-const initTree = (name, changes, children = [], valueBefore = '', valueAfter = '') => ({
-  name,
-  changes,
-  children,
-  valueBefore,
-  valueAfter,
-});
-
 const buildComparisonTreeArray = (object1, object2) => {
   const sortedKeys = _.sortBy(_.union(Object.keys(object1), Object.keys(object2)));
   const packedTree = sortedKeys.map((key) => {
@@ -20,22 +12,26 @@ const buildComparisonTreeArray = (object1, object2) => {
 
     if (Object.hasOwn(object1, key) && Object.hasOwn(object2, key)) {
       if (_.isPlainObject(value1) && _.isPlainObject(value2)) {
-        return initTree(key, 'unchanged', buildComparisonTreeArray(value1, value2), '', '');
+        return { name: key, changes: 'unchanged', children: buildComparisonTreeArray(value1, value2) };
       }
 
       if (_.isEqual(value1, value2)) {
-        return initTree(key, 'unchanged', [], value1, value1);
+        return {
+          name: key, changes: 'unchanged', valueBefore: value1, valueAfter: value1,
+        };
       }
 
-      return initTree(key, 'updated', [], value1, value2);
+      return {
+        name: key, changes: 'updated', valueBefore: value1, valueAfter: value2,
+      };
     }
 
     if (Object.hasOwn(object1, key)) {
-      return initTree(key, 'removed', [], value1, '');
+      return { name: key, changes: 'removed', valueBefore: value1 };
     }
 
     if (Object.hasOwn(object2, key)) {
-      return initTree(key, 'added', [], '', value2);
+      return { name: key, changes: 'added', valueAfter: value2 };
     }
 
     throw new Error('If you see this message, perhaps there is a problem in the program code. Check it');
