@@ -33,7 +33,7 @@ test.each([
   { a: filePath10, b: filePath11, expected: expectedResult3 },
   { a: filePath13, b: filePath14, expected: expectedResult3 },
 ])('genDiff function default parameters', ({ a, b, expected }) => {
-  expect(genDiff(a, b)).toBe(expected);
+  expect(genDiff(a, b)).toEqual(expected);
 });
 
 test('genDiff function', () => {

@@ -32,7 +32,7 @@ const stylish = (coll, replacer = ' ', spacesCount = 2) => {
 
     const lines = currentNode.map((node) => {
       const {
-        name, status, children, valueBefore, valueAfter,
+        name, changes, children, valueBefore, valueAfter,
       } = node;
 
       const oldValueAsString = stringify(valueBefore, depth);
@@ -42,16 +42,16 @@ const stylish = (coll, replacer = ' ', spacesCount = 2) => {
         return `${commonIndent}  ${name}: ${iter(children, depth + 2)}`;
       }
 
-      if (status === 'updated') {
+      if (changes === 'updated') {
         return `${commonIndent}- ${name}: ${oldValueAsString}`
           + '\n'
           + `${commonIndent}+ ${name}: ${newValueAsString}`;
       }
 
-      if (status === 'added') {
+      if (changes === 'added') {
         return `${commonIndent}+ ${name}: ${newValueAsString}`;
       }
-      if (status === 'removed') {
+      if (changes === 'removed') {
         return `${commonIndent}- ${name}: ${oldValueAsString}`;
       }
 
