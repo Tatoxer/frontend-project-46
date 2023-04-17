@@ -1,3 +1,3 @@
-const jsonFormatter = (arrayObj) => JSON.stringify(arrayObj);
+const jsonFormatter = JSON.stringify;
 
 export default jsonFormatter;

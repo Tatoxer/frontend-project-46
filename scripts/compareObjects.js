@@ -8,17 +8,17 @@ const initTree = (name, changes, children = [], valueBefore = '', valueAfter = '
   valueAfter,
 });
 
-const buildComparisonTreeArray = (obj1, obj2) => {
-  const sortedKeys = _.sortBy(_.union(Object.keys(obj1), Object.keys(obj2)));
+const buildComparisonTreeArray = (object1, object2) => {
+  const sortedKeys = _.sortBy(_.union(Object.keys(object1), Object.keys(object2)));
   const packedTree = sortedKeys.map((key) => {
-    const value1 = obj1[key];
-    const value2 = obj2[key];
+    const value1 = object1[key];
+    const value2 = object2[key];
 
     if (value1 === undefined && value2 === undefined) {
       return new Error('If you see this message, perhaps there is a problem in program code. Check object values');
     }
 
-    if (Object.hasOwn(obj1, key) && Object.hasOwn(obj2, key)) {
+    if (Object.hasOwn(object1, key) && Object.hasOwn(object2, key)) {
       if (_.isPlainObject(value1) && _.isPlainObject(value2)) {
         return initTree(key, 'unchanged', buildComparisonTreeArray(value1, value2), '', '');
       }
@@ -30,11 +30,11 @@ const buildComparisonTreeArray = (obj1, obj2) => {
       return initTree(key, 'updated', [], value1, value2);
     }
 
-    if (Object.hasOwn(obj1, key)) {
+    if (Object.hasOwn(object1, key)) {
       return initTree(key, 'removed', [], value1, '');
     }
 
-    if (Object.hasOwn(obj2, key)) {
+    if (Object.hasOwn(object2, key)) {
       return initTree(key, 'added', [], '', value2);
     }
 

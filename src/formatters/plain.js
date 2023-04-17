@@ -1,6 +1,6 @@
 import _ from 'lodash';
 
-const prepareObjValue = (value) => {
+const stringify = (value) => {
   if (_.isObject(value)) return '[complex value]';
   if (typeof value === 'string') return `'${value}'`;
 
@@ -8,8 +8,8 @@ const prepareObjValue = (value) => {
 };
 
 const buildEnding = (changes, valueBefore, valueAfter) => {
-  const preparedBeforeValue = prepareObjValue(valueBefore);
-  const preparedAfterValue = prepareObjValue(valueAfter);
+  const preparedBeforeValue = stringify(valueBefore);
+  const preparedAfterValue = stringify(valueAfter);
 
   switch (changes) {
     case 'removed':

@@ -35,28 +35,28 @@ const stylish = (coll, replacer = ' ', spacesCount = 2) => {
         name, changes, children, valueBefore, valueAfter,
       } = node;
 
-      const oldValueAsString = stringify(valueBefore, depth);
-      const newValueAsString = stringify(valueAfter, depth);
+      const beforeValueAsString = stringify(valueBefore, depth);
+      const afterValueAsString = stringify(valueAfter, depth);
 
       if (children.length > 0) {
         return `${commonIndent}  ${name}: ${iter(children, depth + 2)}`;
       }
 
       if (changes === 'updated') {
-        return `${commonIndent}- ${name}: ${oldValueAsString}`
+        return `${commonIndent}- ${name}: ${beforeValueAsString}`
           + '\n'
-          + `${commonIndent}+ ${name}: ${newValueAsString}`;
+          + `${commonIndent}+ ${name}: ${afterValueAsString}`;
       }
 
       if (changes === 'added') {
-        return `${commonIndent}+ ${name}: ${newValueAsString}`;
+        return `${commonIndent}+ ${name}: ${afterValueAsString}`;
       }
       if (changes === 'removed') {
-        return `${commonIndent}- ${name}: ${oldValueAsString}`;
+        return `${commonIndent}- ${name}: ${beforeValueAsString}`;
       }
 
       // If nothing changed
-      return `${commonIndent}  ${name}: ${oldValueAsString}`;
+      return `${commonIndent}  ${name}: ${beforeValueAsString}`;
     });
 
     return [
