@@ -17,12 +17,13 @@ const filePath12 = getFixturePath('expectedDeep.txt');
 const filePath13 = getFixturePath('fileDeep1.yaml');
 const filePath14 = getFixturePath('fileDeep2.yml');
 const filePath15 = getFixturePath('expectedPlain.txt');
+const filePath16 = getFixturePath('expectedJSON.json');
 
 const expectedResult1 = fs.readFileSync(filePath4, 'utf-8');
 const expectedResult2 = fs.readFileSync(filePath5, 'utf-8');
 const expectedResult3 = fs.readFileSync(filePath12, 'utf-8');
 const expectedResult4 = fs.readFileSync(filePath15, 'utf-8');
-const expectedResult5 = parser(getFixturePath('expectedJSON.json'), 'expectedJSON.json');
+const expectedResult5 = parser(fs.readFileSync(filePath16, 'utf-8'), '.json');
 
 test.each([
   { a: filePath1, b: filePath2, expected: expectedResult1 },
