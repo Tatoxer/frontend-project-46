@@ -13,10 +13,6 @@ const makePlainFormat = (objects) => {
       .flatMap((node) => {
         const chain = (nameChain === '') ? node.key : nameChain.concat('.', node.key);
 
-        if (node.children) {
-          return iter(node.children, chain);
-        }
-
         const preparedObject1Value = stringify(node.object1Value);
         const preparedObject2Value = stringify(node.object2Value);
 
@@ -28,6 +24,9 @@ const makePlainFormat = (objects) => {
           case 'updated':
             return `Property '${chain}' was ${node.type}. From ${preparedObject1Value} to ${preparedObject2Value}`;
           case 'unchanged':
+            if (node.children) {
+              return iter(node.children, chain);
+            }
             return '';
           default:
             throw new Error(`Unknown type "${node.type}"`);

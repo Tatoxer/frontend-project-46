@@ -4,7 +4,7 @@ const makeIndents = (identSize, spacesCount) => [' '.repeat(identSize), ' '.repe
 
 const stringify = (value, currentDepth, spacesCount = 2) => {
   const iter = (currentValue, depth) => {
-    if (!_.isObject(currentValue)) {
+    if (!_.isPlainObject(currentValue)) {
       return `${currentValue}`;
     }
 
@@ -34,10 +34,6 @@ const makeStylishFormat = (coll, spacesCount = 2) => {
       const object1ValueAsString = stringify(node.object1Value, depth);
       const object2ValueAsString = stringify(node.object2Value, depth);
 
-      if (node.children) {
-        return `${commonIndent}  ${node.key}: ${iter(node.children, depth + 2)}`;
-      }
-
       switch (node.type) {
         case 'updated':
           return [
@@ -48,8 +44,13 @@ const makeStylishFormat = (coll, spacesCount = 2) => {
           return `${commonIndent}+ ${node.key}: ${object2ValueAsString}`;
         case 'removed':
           return `${commonIndent}- ${node.key}: ${object1ValueAsString}`;
-        default:
+        case 'unchanged':
+          if (node.children) {
+            return `${commonIndent}  ${node.key}: ${iter(node.children, depth + 2)}`;
+          }
           return `${commonIndent}  ${node.key}: ${object1ValueAsString}`;
+        default:
+          throw new Error(`${node.type} is unexpected`);
       }
     });
 
