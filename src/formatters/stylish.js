@@ -1,14 +1,15 @@
 import _ from 'lodash';
 
-const stringify = (value, currentDepth, replacer = ' ', spacesCount = 2) => {
+const makeIndents = (identSize, spacesCount) => [' '.repeat(identSize), ' '.repeat(identSize - spacesCount)];
+
+const stringify = (value, currentDepth, spacesCount = 2) => {
   const iter = (currentValue, depth) => {
     if (!_.isObject(currentValue)) {
       return `${currentValue}`;
     }
 
     const indentSize = depth * spacesCount;
-    const indent = replacer.repeat(indentSize);
-    const bracketIndent = replacer.repeat(indentSize - spacesCount);
+    const [indent, bracketIndent] = makeIndents(indentSize, spacesCount);
 
     const lines = Object
       .entries(currentValue)
@@ -24,31 +25,31 @@ const stringify = (value, currentDepth, replacer = ' ', spacesCount = 2) => {
   return iter(value, currentDepth + spacesCount);
 };
 
-const stylish = (coll, replacer = ' ', spacesCount = 2) => {
+const makeStylishFormat = (coll, spacesCount = 2) => {
   const iter = (currentNode, depth) => {
     const indentSize = depth * spacesCount;
-    const commonIndent = replacer.repeat(indentSize);
-    const bracketIndent = replacer.repeat(indentSize - spacesCount);
+    const [commonIndent, bracketIndent] = makeIndents(indentSize, spacesCount);
 
     const lines = currentNode.map((node) => {
-      const beforeValueAsString = stringify(node.valueBefore, depth);
-      const afterValueAsString = stringify(node.valueAfter, depth);
+      const object1ValueAsString = stringify(node.object1Value, depth);
+      const object2ValueAsString = stringify(node.object2Value, depth);
 
       if (node.children) {
-        return `${commonIndent}  ${node.name}: ${iter(node.children, depth + 2)}`;
+        return `${commonIndent}  ${node.key}: ${iter(node.children, depth + 2)}`;
       }
 
-      switch (node.changes) {
+      switch (node.type) {
         case 'updated':
-          return `${commonIndent}- ${node.name}: ${beforeValueAsString}`
-            + '\n'
-            + `${commonIndent}+ ${node.name}: ${afterValueAsString}`;
+          return [
+            `${commonIndent}- ${node.key}: ${object1ValueAsString}`,
+            `${commonIndent}+ ${node.key}: ${object2ValueAsString}`,
+          ].join('\n');
         case 'added':
-          return `${commonIndent}+ ${node.name}: ${afterValueAsString}`;
+          return `${commonIndent}+ ${node.key}: ${object2ValueAsString}`;
         case 'removed':
-          return `${commonIndent}- ${node.name}: ${beforeValueAsString}`;
+          return `${commonIndent}- ${node.key}: ${object1ValueAsString}`;
         default:
-          return `${commonIndent}  ${node.name}: ${beforeValueAsString}`;
+          return `${commonIndent}  ${node.key}: ${object1ValueAsString}`;
       }
     });
 
@@ -62,4 +63,4 @@ const stylish = (coll, replacer = ' ', spacesCount = 2) => {
   return iter(coll, 1);
 };
 
-export default stylish;
+export default makeStylishFormat;

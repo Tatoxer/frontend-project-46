@@ -7,37 +7,35 @@ const stringify = (value) => {
   return value;
 };
 
-const plainFormatter = (arrayObj) => {
+const makePlainFormat = (objects) => {
   const iter = (currentNode, nameChain) => {
     const lines = currentNode
-      .filter((node) => !(node.changes === 'unchanged' && _.isEmpty(node.children)))
       .flatMap((node) => {
-        const {
-          name, changes, children, valueBefore, valueAfter,
-        } = node;
+        const chain = (nameChain === '') ? node.key : nameChain.concat('.', node.key);
 
-        const chain = (nameChain === '') ? name : nameChain.concat('.', name);
-
-        if (children) {
-          return iter(children, chain);
+        if (node.children) {
+          return iter(node.children, chain);
         }
-        const preparedBeforeValue = stringify(valueBefore);
-        const preparedAfterValue = stringify(valueAfter);
 
-        switch (changes) {
+        const preparedObject1Value = stringify(node.object1Value);
+        const preparedObject2Value = stringify(node.object2Value);
+
+        switch (node.type) {
           case 'removed':
-            return `Property '${chain}' was ${changes}`;
+            return `Property '${chain}' was ${node.type}`;
           case 'added':
-            return `Property '${chain}' was ${changes} with value: ${preparedAfterValue}`;
+            return `Property '${chain}' was ${node.type} with value: ${preparedObject2Value}`;
           case 'updated':
-            return `Property '${chain}' was ${changes}. From ${preparedBeforeValue} to ${preparedAfterValue}`;
+            return `Property '${chain}' was ${node.type}. From ${preparedObject1Value} to ${preparedObject2Value}`;
+          case 'unchanged':
+            return '';
           default:
-            return `Property '${chain}' was ${changes}`;
+            throw new Error(`Unknown type "${node.type}"`);
         }
-      }).join('\n');
-    return lines;
+      });
+    return lines.filter((elem) => elem !== '').join('\n');
   };
-  return iter(arrayObj, '');
+  return iter(objects, '');
 };
 
-export default plainFormatter;
+export default makePlainFormat;

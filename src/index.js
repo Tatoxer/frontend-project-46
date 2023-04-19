@@ -1,9 +1,9 @@
 import path from 'path';
 import fs from 'fs';
 import parseFile from './parser.js';
-import buildComparisonTreeArray from './compareObjects.js';
-import plainFormatter from './formatters/plain.js';
-import stylish from './formatters/stylish.js';
+import buildComparisonTreeObjects from './compareObjects.js';
+import makePlainFormat from './formatters/plain.js';
+import makeStylishFormat from './formatters/stylish.js';
 
 const getAbsolutePathFile = (relativePath) => {
   const currentDir = process.cwd().split('/');
@@ -16,14 +16,16 @@ const getAbsolutePathFile = (relativePath) => {
   return null;
 };
 
-const chooseFormatter = (formatter, threeArray) => {
+const chooseFormatter = (formatter, objects) => {
   switch (formatter) {
     case 'plain':
-      return plainFormatter(threeArray);
+      return makePlainFormat(objects);
     case 'json':
-      return JSON.stringify(threeArray);
+      return JSON.stringify(objects);
+    case 'stylish':
+      return makeStylishFormat(objects);
     default:
-      return stylish(threeArray);
+      throw new Error(`The formatter "${formatter}" is unknown!`);
   }
 };
 
@@ -38,7 +40,7 @@ const genDiff = (filePath1, filePath2, formatter) => {
   const fileContent1 = getFileData(filePath1);
   const fileContent2 = getFileData(filePath2);
 
-  const difference = buildComparisonTreeArray(fileContent1, fileContent2);
+  const difference = buildComparisonTreeObjects(fileContent1, fileContent2);
 
   return chooseFormatter(formatter, difference);
 };
