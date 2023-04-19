@@ -6,10 +6,6 @@ const buildComparisonTreeArray = (object1, object2) => {
     const value1 = object1[key];
     const value2 = object2[key];
 
-    if (value1 === undefined && value2 === undefined) {
-      return new Error('If you see this message, perhaps there is a problem in program code. Check object values');
-    }
-
     if (Object.hasOwn(object1, key) && Object.hasOwn(object2, key)) {
       if (_.isPlainObject(value1) && _.isPlainObject(value2)) {
         return { name: key, changes: 'unchanged', children: buildComparisonTreeArray(value1, value2) };
