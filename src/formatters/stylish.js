@@ -26,29 +26,29 @@ const stringify = (value, currentDepth, spacesCount = 2) => {
 };
 
 const makeStylishFormat = (coll, spacesCount = 2) => {
-  const iter = (currentNode, depth) => {
-    const indentSize = depth * spacesCount;
+  const iter = (currentNode, multiplierValue) => {
+    const indentSize = multiplierValue * spacesCount;
     const [commonIndent, bracketIndent] = makeIndents(indentSize, spacesCount);
 
     const lines = currentNode.map((node) => {
-      const object1ValueAsString = stringify(node.object1Value, depth);
-      const object2ValueAsString = stringify(node.object2Value, depth);
-
       switch (node.type) {
-        case 'updated':
+        case 'changed':
           return [
-            `${commonIndent}- ${node.key}: ${object1ValueAsString}`,
-            `${commonIndent}+ ${node.key}: ${object2ValueAsString}`,
+            `${commonIndent}- ${node.key}: ${stringify(node.object1Value, multiplierValue)}`,
+            `${commonIndent}+ ${node.key}: ${stringify(node.object2Value, multiplierValue)}`,
           ].join('\n');
         case 'added':
-          return `${commonIndent}+ ${node.key}: ${object2ValueAsString}`;
+          return `${commonIndent}+ ${node.key}: ${stringify(node.object2Value, multiplierValue)}`;
+
         case 'removed':
-          return `${commonIndent}- ${node.key}: ${object1ValueAsString}`;
+          return `${commonIndent}- ${node.key}: ${stringify(node.object1Value, multiplierValue)}`;
+
         case 'unchanged':
-          if (node.children) {
-            return `${commonIndent}  ${node.key}: ${iter(node.children, depth + 2)}`;
-          }
-          return `${commonIndent}  ${node.key}: ${object1ValueAsString}`;
+          return `${commonIndent}  ${node.key}: ${stringify(node.object1Value, multiplierValue)}`;
+
+        case 'nested':
+          return `${commonIndent}  ${node.key}: ${iter(node.children, multiplierValue + 2)}`;
+
         default:
           throw new Error(`${node.type} is unexpected`);
       }

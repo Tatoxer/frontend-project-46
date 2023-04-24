@@ -13,26 +13,27 @@ const makePlainFormat = (objects) => {
       .flatMap((node) => {
         const chain = (nameChain === '') ? node.key : nameChain.concat('.', node.key);
 
-        const preparedObject1Value = stringify(node.object1Value);
-        const preparedObject2Value = stringify(node.object2Value);
-
         switch (node.type) {
           case 'removed':
             return `Property '${chain}' was ${node.type}`;
+
           case 'added':
-            return `Property '${chain}' was ${node.type} with value: ${preparedObject2Value}`;
-          case 'updated':
-            return `Property '${chain}' was ${node.type}. From ${preparedObject1Value} to ${preparedObject2Value}`;
+            return `Property '${chain}' was ${node.type} with value: ${stringify(node.object2Value)}`;
+
+          case 'changed':
+            return `Property '${chain}' was updated. From ${stringify(node.object1Value)} to ${stringify(node.object2Value)}`;
+
           case 'unchanged':
-            if (node.children) {
-              return iter(node.children, chain);
-            }
-            return '';
+            return null;
+
+          case 'nested':
+            return iter(node.children, chain);
+
           default:
             throw new Error(`Unknown type "${node.type}"`);
         }
       });
-    return lines.filter((elem) => elem !== '').join('\n');
+    return lines.filter((elem) => elem !== null).join('\n');
   };
   return iter(objects, '');
 };
