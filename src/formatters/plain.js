@@ -18,10 +18,10 @@ const makePlainFormat = (objects) => {
             return `Property '${chain}' was ${node.type}`;
 
           case 'added':
-            return `Property '${chain}' was ${node.type} with value: ${stringify(node.object2Value)}`;
+            return `Property '${chain}' was ${node.type} with value: ${stringify(node.value)}`;
 
           case 'changed':
-            return `Property '${chain}' was updated. From ${stringify(node.object1Value)} to ${stringify(node.object2Value)}`;
+            return `Property '${chain}' was updated. From ${stringify(node.value1)} to ${stringify(node.value2)}`;
 
           case 'unchanged':
             return null;
