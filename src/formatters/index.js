@@ -1,7 +1,7 @@
 import makePlainFormat from './plain.js';
 import makeStylishFormat from './stylish.js';
 
-const chooseFormatter = (formatter, objects) => {
+const chooseFormatter = (objects, formatter) => {
   switch (formatter) {
     case 'plain':
       return makePlainFormat(objects);
