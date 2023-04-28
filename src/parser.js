@@ -1,21 +1,17 @@
 import jsYaml from 'js-yaml';
-import path from 'path';
-import fs from 'fs';
 
-const parseFile = (filePath) => {
-  const rawFileData = fs.readFileSync(filePath, 'utf-8');
-  const fileExtension = path.extname(filePath).slice(1);
-  switch (fileExtension) {
+const parseFile = (fileData, fileType) => {
+  switch (fileType) {
     case 'yml':
     case 'yaml':
-      return jsYaml.load(rawFileData);
+      return jsYaml.load(fileData);
     case 'json':
-      return JSON.parse(rawFileData);
+      return JSON.parse(fileData);
     case 'txt':
-      return rawFileData;
+      return fileData;
 
     default:
-      return new Error(`Unknown file format ${fileExtension}`);
+      return new Error(`Unknown file type ${fileType}`);
   }
 };
 

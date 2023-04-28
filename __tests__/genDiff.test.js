@@ -1,5 +1,6 @@
 import { fileURLToPath } from 'url';
 import path, { dirname } from 'path';
+import fs from 'fs';
 import genDiff from '../src/index.js';
 import parseFile from '../src/parser.js';
 
@@ -48,6 +49,9 @@ test.each([
 ])('.genDiff(%s, %s)', ({
   content1, content2, formatter, expected,
 }) => {
+  const rawFileData = fs.readFileSync(getFixturePath(expected), 'utf-8');
+  const fileType = path.extname(expected).slice(1);
+
   expect(genDiff(getFixturePath(content1), getFixturePath(content2), formatter))
-    .toEqual(parseFile(getFixturePath(expected)));
+    .toEqual(parseFile(rawFileData, fileType));
 });
