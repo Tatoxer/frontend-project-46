@@ -1,6 +1,6 @@
 import _ from 'lodash';
 
-const makeIndents = (depth, spacesCount = 4, shiftToLeft = 2) => ' '.repeat(depth * spacesCount - shiftToLeft);
+const makeIndent = (depth, spacesCount = 4, shiftToLeft = 2) => ' '.repeat(depth * spacesCount - shiftToLeft);
 
 const stringify = (value, currentDepth) => {
   const iter = (currentValue, depth) => {
@@ -8,7 +8,7 @@ const stringify = (value, currentDepth) => {
       return `${currentValue}`;
     }
 
-    const indent = makeIndents(depth);
+    const indent = makeIndent(depth);
 
     const lines = Object
       .entries(currentValue)
@@ -26,7 +26,7 @@ const stringify = (value, currentDepth) => {
 
 const makeStylishFormat = (coll) => {
   const iter = (currentNode, depth) => {
-    const indent = makeIndents(depth);
+    const indent = makeIndent(depth);
 
     const lines = currentNode.map((node) => {
       switch (node.type) {
@@ -55,7 +55,7 @@ const makeStylishFormat = (coll) => {
     return [
       '{',
       ...lines,
-      `${makeIndents(depth, 4, 4)}}`,
+      `${makeIndent(depth, 4, 4)}}`,
     ].join('\n');
   };
 

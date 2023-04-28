@@ -6,7 +6,7 @@ import parseFile from '../src/parser.js';
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
-const getFixturePath = (filename) => path.join(__dirname, '..', '__fixtures__', filename);
+const getFixturePath = (fileName) => path.join(__dirname, '..', '__fixtures__', fileName);
 
 test.each([
   {
@@ -45,7 +45,7 @@ test.each([
     formatter: 'json',
     expected: 'expectedJSON.json',
   },
-])('genDiff function', ({
+])('.genDiff(%s, %s)', ({
   content1, content2, formatter, expected,
 }) => {
   expect(genDiff(getFixturePath(content1), getFixturePath(content2), formatter))
